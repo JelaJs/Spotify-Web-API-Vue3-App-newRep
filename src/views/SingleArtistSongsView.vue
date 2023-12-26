@@ -16,7 +16,12 @@
     </div>
     <div class="playlist-wrap" v-if="albumTracks">
       <ul class="playlist">
-        <li v-for="track in albumTracks" :key="track.id" class="playlist-item">
+        <li
+          v-for="track in albumTracks"
+          :key="track.id"
+          class="playlist-item"
+          @click="playSong(track, track.uri, albumUri, albumTracks)"
+        >
           <div class="img-p-wrap">
             <img :src="album.images[2].url" alt="Album cover image" />
             <p>{{ track.name }}</p>
@@ -34,22 +39,34 @@
         </li>
       </ul>
     </div>
+    <PopUp v-if="player.playSongError"
+      ><p>
+        Something went wrong, check your active device on your original spotify app(Bottom Left
+        Corner)
+      </p></PopUp
+    >
+    <PlaylistOtions v-if="optionToggler" @toggleComp="toggle()" />
   </div>
 </template>
 
 <script setup>
 import { ref, inject, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-//import PlaylistOtions from '../components/PlaylistOtions.vue'
+import PlaylistOtions from '../components/PlaylistOtions.vue'
 import { useCustomPlaylist } from '../stores/CustomPlaylist'
+import PopUp from '../components/PopUp.vue'
+import { usePLayerStore } from '../stores/player'
 
 const route = useRoute()
 const router = useRouter()
 const playlist = useCustomPlaylist()
+const player = usePLayerStore()
 
 const id = route.params.id
 const album = ref(null)
 const albumTracks = ref(null)
+const albumUri = ref(null)
+const optionToggler = ref(false)
 
 const checkAndRefreshAccessToken = inject('checkAndRefreshAccessToken')
 const accessToken = ref(localStorage.getItem('access_token') || null)
@@ -72,7 +89,9 @@ const getAlbum = async () => {
     if (response.ok) {
       const data = await response.json()
       album.value = data
+      albumUri.value = data.uri
       console.log(album.value)
+      console.log('AlbumUri', albumUri.value)
     } else {
       throw new Error(`Error: ${await response.text()}`)
     }
@@ -102,6 +121,24 @@ const getAlbumTracks = async () => {
   } catch (error) {
     console.error(error)
   }
+}
+
+const toggle = () => {
+  optionToggler.value = false
+}
+
+const addTrackToPlaylist = async (track) => {
+  console.log(track)
+  if (playlist.selectedPlaylist === '') {
+    optionToggler.value = true
+  } else {
+    await playlist.addSongToCustomPlaylistFromArtist(track).then((playlist.selectedPlaylist = ''))
+  }
+}
+
+const playSong = async (track, uri, playlistUri, playlist) => {
+  await checkAndRefreshAccessToken()
+  await player.playAlbumSong(track, uri, playlistUri, playlist)
 }
 
 onMounted(async () => {
@@ -140,8 +177,6 @@ onMounted(async () => {
 }
 
 .album-header img {
-  width: 250px;
-  height: 250px;
   border-radius: 10px;
 }
 

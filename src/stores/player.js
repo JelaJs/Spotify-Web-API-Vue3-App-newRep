@@ -193,6 +193,56 @@ export const usePLayerStore = defineStore('player', () => {
     }
   }
 
+  const playAlbumSong = async (track, uri, playlistUri, playlist) => {
+    curTrack.value = track
+    curUri.value = uri
+    curPlaylistUri.value = playlistUri
+    curPlaylist.value = playlist
+
+    try {
+      const accessToken = ref(localStorage.getItem('access_token') || null)
+
+      const spotifyUri = uri
+
+      const playEndpoint = 'https://api.spotify.com/v1/me/player/play'
+
+      const data = {
+        uris: [spotifyUri],
+        position_ms: 0
+      }
+
+      const requestOptions = {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken.value}`
+        },
+        body: JSON.stringify(data)
+      }
+
+      const response = await fetch(playEndpoint, requestOptions)
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${await response.text()}`)
+      }
+
+      if (response.status === 204) {
+        //console.log('Pesma je uspešno reprodukovana.')
+        isPlaying.value = true
+        currentSong.value = track.name
+        playlistSongIndex.value = curPlaylist.value.findIndex((item) => item.uri === curUri.value)
+        // console.log('trenutna playlista', curPlaylist.value)
+        //console.log('Playlist song index', playlistSongIndex.value)
+      } else {
+        // Ako je status odgovora nešto drugo osim 204, tretirajte ga prema potrebama vaše aplikacije
+        console.error(`Neočekivan status odgovora: ${await response.text()}`)
+      }
+    } catch (error) {
+      console.error('Došlo je do greške prilikom reprodukcije pesme:', error)
+      playSongError.value = true
+    }
+  }
+
   const playNextSong = async (name, uri) => {
     try {
       const accessToken = ref(localStorage.getItem('access_token') || null)
@@ -307,10 +357,19 @@ export const usePLayerStore = defineStore('player', () => {
     if (playlistSongIndex.value === curPlaylist.value.length) {
       playlistSongIndex.value = 0
     }
+    let nextSongUri = ''
+    let name = ''
     const nextSong = curPlaylist.value.filter((item, index) => index === playlistSongIndex.value)
-    const nextSongUri = nextSong[0].track.uri
-    const name = nextSong[0].track.name
-    curUri.value = nextSong[0].track.uri
+    if (nextSong[0].track === undefined) {
+      nextSongUri = nextSong[0].uri
+      curUri.value = nextSong[0].uri
+      name = nextSong[0].name
+    } else {
+      nextSongUri = nextSong[0].track.uri
+      curUri.value = nextSong[0].track.uri
+      name = nextSong[0].track.name
+    }
+
     //console.log('Next song', nextSong[0])
     //console.log('Next song uri', nextSongUri)
     //console.log(playlistSongIndex.value)
@@ -322,10 +381,18 @@ export const usePLayerStore = defineStore('player', () => {
     if (playlistSongIndex.value === -1) {
       playlistSongIndex.value = curPlaylist.value.length - 1
     }
+    let nextSongUri = ''
+    let name = ''
     const nextSong = curPlaylist.value.filter((item, index) => index === playlistSongIndex.value)
-    const nextSongUri = nextSong[0].track.uri
-    const name = nextSong[0].track.name
-    curUri.value = nextSong[0].track.uri
+    if (nextSong[0].track === undefined) {
+      nextSongUri = nextSong[0].uri
+      curUri.value = nextSong[0].uri
+      name = nextSong[0].name
+    } else {
+      nextSongUri = nextSong[0].track.uri
+      curUri.value = nextSong[0].track.uri
+      name = nextSong[0].track.name
+    }
     //console.log('Next song', nextSong[0])
     //console.log('Next song uri', nextSongUri)
     //console.log(playlistSongIndex.value)
@@ -349,6 +416,7 @@ export const usePLayerStore = defineStore('player', () => {
     seekToPosition,
     setVolume,
     maxVolume,
-    curVolume
+    curVolume,
+    playAlbumSong
   }
 })

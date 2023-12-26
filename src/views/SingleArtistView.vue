@@ -133,6 +133,8 @@ onMounted(async () => {
 
 .header .header-content-wrap img {
   border-radius: 10px;
+  width: 400px;
+  height: 400px;
 }
 
 .header .header-content-wrap h1 {
