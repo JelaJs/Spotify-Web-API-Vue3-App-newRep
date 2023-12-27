@@ -178,4 +178,20 @@ onMounted(() => {
 .audio-player .volume-wrap .volume-range {
   margin-left: 10px;
 }
+
+/*Responsive */
+@media (max-width: 915px) {
+  .audio-player .volume-wrap .volume-range {
+    transform: rotate(-90deg);
+    width: 70px;
+    position: absolute;
+    top: -32px;
+    left: -39px;
+  }
+
+  .audio-player .volume-wrap svg {
+    position: absolute;
+    top: 15px;
+  }
+}
 </style>

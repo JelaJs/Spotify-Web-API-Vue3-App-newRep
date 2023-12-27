@@ -9,6 +9,7 @@
           <RouterLink to="/">Artists</RouterLink>
           <RouterLink to="/categories">Categories</RouterLink>
         </nav>
+        <button class="logout-Btn" @click="logOut">Log out</button>
       </header>
       <CustomPlaylist :checkAndRefreshAccessToken="checkAndRefreshAccessToken" />
     </div>
@@ -145,6 +146,13 @@ const refreshAccessToken = async () => {
   }
 }
 
+const logOut = () => {
+  localStorage.removeItem('access_token')
+  localStorage.removeItem('refresh_token')
+  localStorage.removeItem('access_token_expires_at')
+  location.reload()
+}
+
 onMounted(() => {
   if (accessToken.value) {
     checkAndRefreshAccessToken()
@@ -191,6 +199,21 @@ onMounted(() => {
 
 .grid .left-side header nav a:hover {
   color: #ffffffc7;
+}
+
+.grid .left-side header .logout-Btn {
+  border: none;
+  background-color: #070707;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.grid .left-side header .logout-Btn:hover {
+  background-color: #161616;
 }
 /*
 .grid .left-side .custom-playList {
@@ -241,5 +264,51 @@ onMounted(() => {
   color: white;
   background-color: #111111;
   scale: 1.1;
+}
+
+/*Route transition
+.route-enter-from {
+  opacity: 0;
+  transform: translateX(100px);
+}
+.route-enter-active {
+  transition: all 0.3 ease-out;
+}
+.route-leave-to {
+  opacity: 0;
+  transform: translateX(-100px);
+}
+.route-leave-active {
+  transition: all 0.3 ease-in;
+}*/
+
+@media (max-width: 1400px) {
+  .grid .left-side header nav {
+    gap: 15px;
+  }
+
+  .grid .left-side {
+    width: 194px;
+  }
+
+  .grid .left-side header nav a {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 575px) {
+  .grid .left-side {
+    width: 140px;
+  }
+
+  .grid .left-side {
+    width: 125px;
+  }
+}
+
+@media (max-width: 415px) {
+  .grid .left-side {
+    width: 125px;
+  }
 }
 </style>

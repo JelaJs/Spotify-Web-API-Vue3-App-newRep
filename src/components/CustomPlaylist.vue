@@ -216,4 +216,37 @@ onMounted(async () => {
 .fade-leave-to {
   opacity: 0;
 }
+
+/**Responsive */
+@media (max-width: 1400px) {
+  .custom-playList .custom-header-btn-wrap h4 {
+    font-size: 18px;
+  }
+
+  .custom-playList p {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 575px) {
+  .custom-playList .custom-header-btn-wrap {
+    flex-direction: column;
+    align-items: start;
+  }
+
+  .custom-playList .custom-header-btn-wrap h4 {
+    font-size: 14px;
+  }
+
+  .custom-form {
+    position: absolute;
+    padding: 10px;
+    background-color: #424242;
+    border-radius: 10px;
+  }
+
+  .custom-form form .form-input-wrap label {
+    color: white;
+  }
+}
 </style>
