@@ -64,7 +64,7 @@ const exchangeCodeForAccessToken = async () => {
       body: new URLSearchParams({
         grant_type: 'authorization_code',
         code: code.value,
-        redirect_uri: 'http://localhost:5173/',
+        redirect_uri: 'https://spotifyprojectvue.netlify.app/',
         client_id: 'c92cce6aa61a47eab08c3263f4883225',
         client_secret: '237534ceca1a4e8790f842ab589b16fd'
       })
