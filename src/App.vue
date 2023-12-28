@@ -34,7 +34,7 @@ const refreshToken = ref(localStorage.getItem('refresh_token') || null)
 
 const authorizeApp = () => {
   const clientId = 'c92cce6aa61a47eab08c3263f4883225'
-  const redirectUri = 'http://localhost:5173/'
+  const redirectUri = 'https://spotifyprojectvue.netlify.app/'
   const responseType = 'code'
   const scope =
     'user-read-private user-read-email user-modify-playback-state user-library-read streaming user-read-playback-state playlist-read-private  user-read-currently-playing playlist-modify-public playlist-modify-private'
