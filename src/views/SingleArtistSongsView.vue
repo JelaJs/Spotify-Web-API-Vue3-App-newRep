@@ -26,14 +26,17 @@
             <img :src="album.images[2].url" alt="Album cover image" />
             <p>{{ track.name }}</p>
           </div>
-          <div class="button-inner-wrap">
-            <button class="addToCustomPLayListbtn" @click.stop="addTrackToPlaylist(track)">
-              +
-            </button>
-            <div class="btn-message-wrap">
-              <p v-if="!playlist.added">
-                Click first to select playlist, then click again to add a song
-              </p>
+          <div class="time-btn-flex">
+            <p>{{ formatTime(track.duration_ms) }}</p>
+            <div class="button-inner-wrap">
+              <button class="addToCustomPLayListbtn" @click.stop="addTrackToPlaylist(track)">
+                +
+              </button>
+              <div class="btn-message-wrap">
+                <p v-if="!playlist.added">
+                  Click first to select playlist, then click again to add a song
+                </p>
+              </div>
             </div>
           </div>
         </li>
@@ -71,6 +74,14 @@ const optionToggler = ref(false)
 const checkAndRefreshAccessToken = inject('checkAndRefreshAccessToken')
 const accessToken = ref(localStorage.getItem('access_token') || null)
 
+const formatTime = (milliseconds) => {
+  const seconds = Math.floor(milliseconds / 1000)
+  const minutes = Math.floor(seconds / 60)
+  const remainingSeconds = seconds % 60
+
+  return `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`
+}
+
 const goBack = () => {
   router.go(-1)
 }
@@ -90,8 +101,8 @@ const getAlbum = async () => {
       const data = await response.json()
       album.value = data
       albumUri.value = data.uri
-      console.log(album.value)
-      console.log('AlbumUri', albumUri.value)
+      //console.log(album.value)
+      //console.log('AlbumUri', albumUri.value)
     } else {
       throw new Error(`Error: ${await response.text()}`)
     }
@@ -114,7 +125,7 @@ const getAlbumTracks = async () => {
     if (response.ok) {
       const data = await response.json()
       albumTracks.value = data.items
-      console.log('Tracks:', albumTracks.value)
+      //console.log('Tracks:', albumTracks.value)
     } else {
       throw new Error(`Error: ${await response.text()}`)
     }
@@ -128,7 +139,7 @@ const toggle = () => {
 }
 
 const addTrackToPlaylist = async (track) => {
-  console.log(track)
+  //console.log(playlist.customPlayLists.length)
   if (playlist.selectedPlaylist === '') {
     optionToggler.value = true
   } else {
@@ -178,6 +189,8 @@ onMounted(async () => {
 
 .album-header img {
   border-radius: 10px;
+  width: 300px;
+  height: 300px;
 }
 
 .playlist-wrap {
@@ -210,6 +223,12 @@ onMounted(async () => {
   display: flex;
   align-items: center;
   gap: 10px;
+}
+
+.time-btn-flex {
+  display: flex;
+  gap: 20px;
+  align-items: center;
 }
 
 .playlist-wrap .playlist .playlist-item .img-p-wrap img {
@@ -267,5 +286,66 @@ onMounted(async () => {
 .playlist-wrap .playlist .playlist-item .artist-btn-wrap .addToCustomPLayListbtn:hover {
   transform: scale(1.2);
   color: white;
+}
+
+/*Responsive*/
+@media (max-width: 1804px) {
+  .album-header img {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .backBtn svg {
+    width: 23px;
+    height: 23px;
+  }
+  .playlist-wrap .playlist .playlist-item .img-p-wrap p {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 1060px) {
+  .album-header img {
+    width: 120px;
+    height: 120px;
+  }
+
+  h1 {
+    font-size: 23px;
+  }
+}
+
+@media (max-width: 740px) {
+  .playlist-wrap .playlist .playlist-item .img-p-wrap p {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 640px) {
+  .playlist-wrap .playlist .playlist-item {
+    gap: 10px;
+  }
+}
+
+@media (max-width: 525px) {
+  .playlist-wrap .playlist .playlist-item .img-p-wrap img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .time-btn-flex {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .time-btn-flex p {
+    font-size: 12px;
+  }
+
+  .playlist-wrap .playlist .playlist-item .img-p-wrap p {
+    font-size: 12px;
+  }
 }
 </style>

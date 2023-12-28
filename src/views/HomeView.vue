@@ -9,29 +9,33 @@
         @input="getArtistID"
       />
     </div>
-    <div class="searhed-artist-box" v-if="inputName">
-      <div v-if="searchedArtist">
-        <div class="artist-wrap" @click="goToArtistPage(searchedArtist[0].id)">
-          <img :src="searchedArtist[0].images[2].url" alt="Artist image" />
+    <Transition name="fade" mode="out-in">
+      <div class="searhed-artist-box" v-if="inputName">
+        <div v-if="searchedArtist">
+          <div class="artist-wrap" @click="goToArtistPage(searchedArtist[0].id)">
+            <img :src="searchedArtist[0].images[2].url" alt="Artist image" />
+          </div>
         </div>
+        <div v-if="noArtists">No artists for your query...</div>
+        <div v-if="artistError">Something went wrong, try again later...</div>
       </div>
-      <div v-if="noArtists">No artists for your query...</div>
-      <div v-if="artistError">Something went wrong, try again later...</div>
-    </div>
+    </Transition>
   </div>
   <div class="artists-section">
     <div class="artists-main-wrap">
       <p class="artist-text">Most Popular Male Artists:</p>
-      <div class="artists-grid" v-if="mostPopularMaleArtists">
-        <div
-          class="single-artist"
-          v-for="maleArtist in mostPopularMaleArtists.artists"
-          :key="maleArtist.id"
-          @click="goToArtistPage(maleArtist.id)"
-        >
-          <img :src="maleArtist.images[2].url" alt="Artists image" />
+      <Transition name="fade" mode="out-in">
+        <div class="artists-grid" v-if="mostPopularMaleArtists">
+          <div
+            class="single-artist"
+            v-for="maleArtist in mostPopularMaleArtists.artists"
+            :key="maleArtist.id"
+            @click="goToArtistPage(maleArtist.id)"
+          >
+            <img :src="maleArtist.images[2].url" alt="Artists image" />
+          </div>
         </div>
-      </div>
+      </Transition>
     </div>
 
     <div class="artists-main-wrap">
@@ -138,8 +142,8 @@ const getArtistID = () => {
 
       artistId.value = firstArtist.id
       noArtists.value = false
-      console.log('Artist id:', artistId.value)
-      console.log('Response image:', searchData.artists.items[0].images[0])
+      //console.log('Artist id:', artistId.value)
+      //console.log('Response image:', searchData.artists.items[0].images[0])
 
       await getSearchedArtists(firstArtist.id)
     } catch (error) {
@@ -167,8 +171,8 @@ const getSearchedArtists = async (id) => {
 
     const data = await response.json()
     searchedArtist.value = data.artists
-    console.log('Searched artist:', searchedArtist.value)
-    console.log('Searched artist image:', searchedArtist.value[0].images[2].url)
+    //console.log('Searched artist:', searchedArtist.value)
+    //console.log('Searched artist image:', searchedArtist.value[0].images[2].url)
   } catch (error) {
     console.error('Doslo je do greske:', error)
   }
@@ -194,7 +198,7 @@ const getMostPopularBalkanArtists = async () => {
 
     const data = await response.json()
     mostPopularBalkanArtists.value = data
-    console.log(mostPopularBalkanArtists.value)
+    //console.log(mostPopularBalkanArtists.value)
   } catch (error) {
     console.error('Doslo je do greske:', error)
   }
@@ -220,7 +224,7 @@ const getMostPopularPopArtists = async () => {
 
     const data = await response.json()
     mostPopularPopArtists.value = data
-    console.log(mostPopularPopArtists.value)
+    //console.log(mostPopularPopArtists.value)
   } catch (error) {
     console.error('Doslo je do greske:', error)
   }
@@ -246,7 +250,7 @@ const getMostPopularAmericanRappers = async () => {
 
     const data = await response.json()
     mostPopularAmericanRappers.value = data
-    console.log(mostPopularAmericanRappers.value)
+    //console.log(mostPopularAmericanRappers.value)
   } catch (error) {
     console.error('Doslo je do greske:', error)
   }
@@ -272,7 +276,7 @@ const getMostPopularFemaleArtists = async () => {
 
     const data = await response.json()
     mostPopularFemaleArtists.value = data
-    console.log('Female.artists', mostPopularFemaleArtists.value.artists)
+    // console.log('Female.artists', mostPopularFemaleArtists.value.artists)
   } catch (error) {
     console.error('Doslo je do greske:', error)
   }
@@ -298,7 +302,7 @@ const getMostPopularMaleArtists = async () => {
 
     const data = await response.json()
     mostPopularMaleArtists.value = data
-    console.log(mostPopularMaleArtists.value.artists)
+    // console.log(mostPopularMaleArtists.value.artists)
     //console.log('Imgs', mostPopularMaleArtists.value.artists[0].images[2])
   } catch (error) {
     console.error('Doslo je do greske:', error)
@@ -489,5 +493,16 @@ onMounted(async () => {
   .artists-section .artist-text[data-v-b4e148ca] {
     font-size: 16px;
   }
+}
+
+/**Transition */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-active {
+  opacity: 0;
 }
 </style>

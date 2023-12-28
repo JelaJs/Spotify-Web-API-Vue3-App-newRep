@@ -15,7 +15,7 @@
         @click="goToSongsPage(album.id)"
       >
         <img :src="album.images[1].url" alt="Album cover image" />
-        <p>{{ album.name }}</p>
+        <p>{{ album.name.substring(0, 20) }}</p>
       </div>
     </div>
   </div>
@@ -55,7 +55,7 @@ const getArtist = async () => {
 
     const data = await response.json()
     artist.value = data
-    console.log('Artist info:', artist.value)
+    //console.log('Artist info:', artist.value)
   } catch (error) {
     console.error('Greška prilikom dobijanja informacija o korisniku:', error.message)
   }
@@ -104,7 +104,7 @@ const getArtistsAlbums = async () => {
 
     const data = await response.json()
     artistAlbum.value = data.items
-    console.log('Albums:', artistAlbum.value)
+    //console.log('Albums:', artistAlbum.value)
   } catch (error) {
     console.error('Doslo je do greske:', error)
   }
@@ -133,8 +133,8 @@ onMounted(async () => {
 
 .header .header-content-wrap img {
   border-radius: 10px;
-  width: 400px;
-  height: 400px;
+  width: 300px;
+  height: 300px;
 }
 
 .header .header-content-wrap h1 {
@@ -177,5 +177,81 @@ onMounted(async () => {
   border-radius: 10px;
   width: 200px;
   height: 200px;
+}
+
+/*Responsive*/
+@media (max-width: 1804px) {
+  .header .header-content-wrap img {
+    width: 200px;
+    height: 200px;
+  }
+
+  .header .header-content-wrap h1 {
+    font-size: 23px;
+  }
+
+  .albums-wrap {
+    gap: 20px;
+  }
+  .albums-wrap p {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 1642px) {
+  .albums-wrap img {
+    width: 150px;
+    height: 150px;
+  }
+}
+
+@media (max-width: 1400px) {
+  .albums-wrap img {
+    width: 140px;
+    height: 140px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .header .header-content-wrap img {
+    width: 170px;
+    height: 170px;
+  }
+  .albums-grid {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+}
+
+@media (max-width: 1060px) {
+  .albums-wrap img {
+    width: 120px;
+    height: 120px;
+  }
+
+  .albums-wrap p {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 915px) {
+  .albums-grid {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+@media (max-width: 740px) {
+  .albums-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 525px) {
+  .header .header-content-wrap img {
+    width: 120px;
+    height: 120px;
+  }
+  .albums-grid {
+    grid-template-columns: 1fr;
+  }
 }
 </style>

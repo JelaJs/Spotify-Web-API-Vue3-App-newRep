@@ -90,7 +90,7 @@ const updateCustomPlaylists = async () => {
 watch(
   () => playlist.curPlaylistDeleted,
   () => {
-    console.log('customPlayLists.value je ažuriran:')
+    //console.log('customPlayLists.value je ažuriran:')
     updateCustomPlaylists()
   }
 )
@@ -98,7 +98,7 @@ watch(
 watch(
   () => playlist.curPlaylistCreated,
   () => {
-    console.log('customPlayLists.value je ažuriran:')
+    //console.log('customPlayLists.value je ažuriran:')
     updateCustomPlaylists()
     playlist.curPlaylistCreated = false
   }
@@ -210,7 +210,7 @@ onMounted(async () => {
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.5s;
+  transition: opacity 0.3s;
 }
 .fade-enter-from,
 .fade-leave-to {

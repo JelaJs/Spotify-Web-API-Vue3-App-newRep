@@ -215,7 +215,7 @@ export const useCustomPlaylist = defineStore('customPlaylist', () => {
       }
 
       const data = await response.json()
-      console.log('Pesma je dodata u plejlistu:', data)
+      console.log('Song added to playlist:', data)
     } catch (error) {
       console.error('Can not add track', error)
     }

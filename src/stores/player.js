@@ -102,7 +102,7 @@ export const usePLayerStore = defineStore('player', () => {
       }
 
       if (response.status === 204) {
-        console.log('Pozicija pesme uspešno postavljena.')
+        //console.log('Pozicija pesme uspešno postavljena.')
       } else {
         console.error(`Neočekivan status odgovora: ${response.status}`)
       }
@@ -131,7 +131,7 @@ export const usePLayerStore = defineStore('player', () => {
       }
 
       if (volumetateResponse.status === 204) {
-        console.log('Pozicija zvuka uspešno postavljena.')
+        //console.log('Pozicija zvuka uspešno postavljena.')
         curVolume.value = newVolume
       } else {
         console.error(`Neočekivan status odgovora: ${await volumetateResponse.text()}`)

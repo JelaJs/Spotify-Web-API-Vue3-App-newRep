@@ -52,4 +52,18 @@ const playlist = useCustomPlaylist()
   cursor: pointer;
   border-radius: 5px;
 }
+
+@media (max-width: 525px) {
+  .playlist-options {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 436px) {
+  .playlist-options .content-wrap button {
+    margin-left: 0;
+    margin-right: 10px;
+    margin-top: 20px;
+  }
+}
 </style>

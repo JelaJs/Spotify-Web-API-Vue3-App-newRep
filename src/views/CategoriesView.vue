@@ -223,4 +223,6 @@ onMounted(async () => {
     grid-template-columns: 1fr;
   }
 }
+
+/**Transition */
 </style>

@@ -14,7 +14,7 @@
       >
         <div class="img-p-wrap">
           <img :src="track.track.album.images[2].url" alt="Track image" />
-          <p>{{ track.track.name }}</p>
+          <p>{{ track.track.name.substring(0, 40) }}</p>
         </div>
         <div class="artist-btn-wrap">
           <div class="artists-wrap" v-for="artist in track.track.artists" :key="artist.id">
@@ -166,7 +166,7 @@ const toggle = () => {
 }
 
 const addTrackToPlaylist = async (track) => {
-  console.log(track)
+  // console.log(track)
   if (playlist.selectedPlaylist === '') {
     optionToggler.value = true
   } else {
@@ -300,5 +300,41 @@ onMounted(getSingleCategory)
   display: flex;
   align-items: center;
   gap: 10px;
+}
+
+/**Responsive */
+@media (max-width: 1060px) {
+  .playlist-wrap .playlist .playlist-item .artist-btn-wrap {
+    gap: 10px;
+  }
+  .playlist-wrap .playlist .playlist-item .img-p-wrap p {
+    font-size: 16px;
+  }
+  .artists-wrap p {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 920px) {
+  .playlist-wrap .playlist .playlist-item .img-p-wrap p {
+    font-size: 14px;
+  }
+
+  .artists-wrap p {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 860px) {
+  .playlist-wrap .playlist .playlist-item .artist-btn-wrap .artists-wrap {
+    display: none;
+  }
+}
+
+@media (max-width: 525px) {
+  .playlist-wrap .playlist .playlist-item .img-p-wrap img {
+    width: 50px;
+    height: 50px;
+  }
 }
 </style>

@@ -159,6 +159,10 @@ onMounted(async () => {
   align-items: center;
 }
 
+.img-info-flex img {
+  border-radius: 10px;
+}
+
 .custom-playlist {
   display: flex;
   flex-direction: column;
@@ -197,5 +201,29 @@ onMounted(async () => {
 .custom-playlist .custom-playlist-item .img-info-flex .song-artist-wrap .artist-name {
   font-size: 12px;
   color: #ffffffb4;
+}
+
+/*Responsive*/
+@media (max-width: 1400px) {
+  .custom-header h1 {
+    font-size: 38px;
+  }
+}
+
+@media (max-width: 740px) {
+  .custom-header h1 {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 525px) {
+  .time-del-flex p {
+    display: none;
+  }
+
+  .img-info-flex img {
+    width: 50px;
+    height: 50px;
+  }
 }
 </style>
