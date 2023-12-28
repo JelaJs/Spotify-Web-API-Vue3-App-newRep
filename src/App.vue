@@ -34,14 +34,14 @@ const refreshToken = ref(localStorage.getItem('refresh_token') || null)
 
 const authorizeApp = () => {
   const clientId = 'c92cce6aa61a47eab08c3263f4883225'
-  const redirectUri = 'https://master--spotifyprojectvue.netlify.app/'
+  const redirectUri = 'https://spotifyprojectvue.netlify.app/'
   const responseType = 'code'
   const scope =
     'user-read-private user-read-email user-modify-playback-state user-library-read streaming user-read-playback-state playlist-read-private  user-read-currently-playing playlist-modify-public playlist-modify-private'
 
   const authorizationUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=${responseType}&scope=${scope}`
 
-  // Otvorite prozor/preglednik kako biste omogućili korisniku autorizaciju
+  // Otvora prozor kako bi omogućio korisniku autorizaciju
   window.location.href = authorizationUrl
 }
 
