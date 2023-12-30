@@ -240,6 +240,7 @@ onMounted(async () => {
 
   .custom-form {
     position: absolute;
+    top: 37%;
     padding: 10px;
     background-color: #424242;
     border-radius: 10px;

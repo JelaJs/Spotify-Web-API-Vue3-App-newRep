@@ -128,6 +128,7 @@ onMounted(() => {
   background-color: #080808;
   border-top: 1px solid #ffffff23;
   padding: 20px 40px;
+  z-index: 999;
 }
 
 .audio-player .player-songName {

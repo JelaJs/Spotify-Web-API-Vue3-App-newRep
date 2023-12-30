@@ -321,6 +321,11 @@ onMounted(async () => {
   .playlist-wrap .playlist .playlist-item .img-p-wrap p {
     font-size: 14px;
   }
+
+  .backBtn {
+    margin-bottom: 10px;
+    margin-top: 20px;
+  }
 }
 
 @media (max-width: 640px) {
@@ -333,11 +338,6 @@ onMounted(async () => {
   .playlist-wrap .playlist .playlist-item .img-p-wrap img {
     width: 50px;
     height: 50px;
-  }
-
-  .time-btn-flex {
-    flex-direction: column;
-    gap: 0;
   }
 
   .time-btn-flex p {

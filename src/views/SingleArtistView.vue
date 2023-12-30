@@ -241,17 +241,17 @@ onMounted(async () => {
 
 @media (max-width: 740px) {
   .albums-grid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
   }
 }
 
 @media (max-width: 525px) {
+  .albums-grid {
+    grid-template-columns: 1fr 1fr;
+  }
   .header .header-content-wrap img {
     width: 120px;
     height: 120px;
-  }
-  .albums-grid {
-    grid-template-columns: 1fr;
   }
 }
 </style>

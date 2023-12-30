@@ -472,7 +472,7 @@ onMounted(async () => {
     width: 100%;
   }
   .artists-grid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
   }
 
   .artists-section .artist-text {
@@ -487,7 +487,7 @@ onMounted(async () => {
 
 @media (max-width: 575px) {
   .artists-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
   }
 
   .artists-section .artist-text[data-v-b4e148ca] {

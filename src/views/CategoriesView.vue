@@ -199,6 +199,9 @@ onMounted(async () => {
 }
 
 @media (max-width: 740px) {
+  .categories-wrap {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
   .category-header {
     flex-direction: column;
     align-items: start;
@@ -220,7 +223,7 @@ onMounted(async () => {
 
 @media (max-width: 575px) {
   .categories-wrap {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
   }
 }
 
