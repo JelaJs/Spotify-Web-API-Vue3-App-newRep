@@ -214,7 +214,7 @@ onMounted(() => {
 .grid .responsiveMenuToggler {
   position: absolute;
   top: 11px;
-  left: 11px;
+  left: 20px;
 }
 
 .grid .responsiveMenuToggler button {
