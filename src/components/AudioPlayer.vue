@@ -70,6 +70,7 @@
 <script setup>
 import { defineProps, onMounted } from 'vue'
 import { usePLayerStore } from '../stores/player'
+import { debounce } from 'lodash'
 
 const props = defineProps(['checkAndRefreshAccessToken'])
 const player = usePLayerStore()
@@ -95,7 +96,7 @@ const skipToPrevSong = async () => {
 }
 
 const seekToPosition = async () => {
-  await props.checkAndRefreshAccessToken()
+  //await props.checkAndRefreshAccessToken()
   await player.seekToPosition()
 }
 

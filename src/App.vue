@@ -4,25 +4,27 @@
   </div>
   <div class="grid" v-else>
     <div class="responsiveMenuToggler">
-      <button class="openMenu" @click="openMenu()">
-        <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512">
-          <path
-            d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"
-          />
-        </svg>
-      </button>
+      <div ref="openMenuBtn" class="openBtnWrap">
+        <button class="openMenu" @click="openMenu()">
+          <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512">
+            <path
+              d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"
+            />
+          </svg>
+        </button>
+      </div>
+      <div ref="closeMenuBtn" class="closeBtn-wrap">
+        <button class="closeMenu" @click="closeMenu()">
+          <svg xmlns="http://www.w3.org/2000/svg" height="16" width="12" viewBox="0 0 384 512">
+            <path
+              d="M376.6 84.5c11.3-13.6 9.5-33.8-4.1-45.1s-33.8-9.5-45.1 4.1L192 206 56.6 43.5C45.3 29.9 25.1 28.1 11.5 39.4S-3.9 70.9 7.4 84.5L150.3 256 7.4 427.5c-11.3 13.6-9.5 33.8 4.1 45.1s33.8 9.5 45.1-4.1L192 306 327.4 468.5c11.3 13.6 31.5 15.4 45.1 4.1s15.4-31.5 4.1-45.1L233.7 256 376.6 84.5z"
+            />
+          </svg>
+        </button>
+      </div>
     </div>
     <div ref="leftSide" class="left-side">
       <header ref="leftSideHeader">
-        <div class="closeBtn-wrap">
-          <button class="closeMenu" @click="closeMenu()">
-            <svg xmlns="http://www.w3.org/2000/svg" height="16" width="12" viewBox="0 0 384 512">
-              <path
-                d="M376.6 84.5c11.3-13.6 9.5-33.8-4.1-45.1s-33.8-9.5-45.1 4.1L192 206 56.6 43.5C45.3 29.9 25.1 28.1 11.5 39.4S-3.9 70.9 7.4 84.5L150.3 256 7.4 427.5c-11.3 13.6-9.5 33.8 4.1 45.1s33.8 9.5 45.1-4.1L192 306 327.4 468.5c11.3 13.6 31.5 15.4 45.1 4.1s15.4-31.5 4.1-45.1L233.7 256 376.6 84.5z"
-              />
-            </svg>
-          </button>
-        </div>
         <nav>
           <RouterLink to="/">Artists</RouterLink>
           <RouterLink to="/categories">Categories</RouterLink>
@@ -52,6 +54,8 @@ const refreshToken = ref(localStorage.getItem('refresh_token') || null)
 const leftSide = ref(null)
 const leftSideHeader = ref(null)
 const menuTimeOut = ref(null)
+const openMenuBtn = ref(null)
+const closeMenuBtn = ref(null)
 
 const authorizeApp = () => {
   const clientId = 'c92cce6aa61a47eab08c3263f4883225'
@@ -179,6 +183,8 @@ const openMenu = () => {
   leftSide.value.style.width = '200px'
   leftSide.value.style.height = '100%'
   leftSideHeader.value.style.padding = '20px'
+  openMenuBtn.value.style.display = 'none'
+  closeMenuBtn.value.style.display = 'block'
   //leftSide.value.style.display = 'block'
 }
 
@@ -187,6 +193,8 @@ const closeMenu = () => {
   leftSide.value.style.opacity = '0'
   leftSide.value.style.width = '0'
   leftSide.value.style.height = '0'
+  openMenuBtn.value.style.display = 'block'
+  closeMenuBtn.value.style.display = 'none'
 
   menuTimeOut.value = setTimeout(() => {
     leftSideHeader.value.style.padding = '0'
@@ -213,7 +221,7 @@ onMounted(() => {
 
 .grid .responsiveMenuToggler {
   position: absolute;
-  top: 11px;
+  top: 22px;
   right: 20px;
 }
 
@@ -234,7 +242,7 @@ onMounted(() => {
   padding-bottom: 120px;
 }
 
-.grid .left-side .closeBtn-wrap {
+.closeBtn-wrap {
   text-align: end;
   display: none;
 }
@@ -393,8 +401,8 @@ onMounted(() => {
     transition: all 0.3s;
   }
 
-  .grid .left-side .closeBtn-wrap {
-    display: block;
+  .closeBtn-wrap {
+    display: none;
   }
 
   .grid .left-side header {
