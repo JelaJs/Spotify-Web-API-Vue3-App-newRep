@@ -1,10 +1,10 @@
 <template>
   <div class="playlist-options">
     <div class="content-wrap">
-      <label>Select playlist:</label>
+      <label>Select playlist: (after select click again "+" to add a song)</label>
       <select v-model="playlist.selectedPlaylist" id="selectInput">
         <option v-for="singlePlaylist in playlist.customPlayLists[0]" :key="singlePlaylist.id">
-          Name: {{ singlePlaylist.name }} ; id: {{ singlePlaylist.id }}
+          Name: {{ singlePlaylist.name }} ; <label class="id">id: {{ singlePlaylist.id }}</label>
         </option>
       </select>
       <button @click="$emit('toggleComp')">Select</button>
@@ -42,6 +42,10 @@ const playlist = useCustomPlaylist()
   margin-right: 10px;
 }
 
+.playlist-options .content-wrap option .id {
+  opacity: 0;
+}
+
 .playlist-options .content-wrap button {
   border: none;
   outline: none;
@@ -53,9 +57,20 @@ const playlist = useCustomPlaylist()
   border-radius: 5px;
 }
 
+@media (max-width: 940px) {
+  .playlist-options .content-wrap label {
+    display: block;
+    margin-bottom: 10px;
+  }
+}
+
 @media (max-width: 525px) {
   .playlist-options {
     flex-direction: column;
+  }
+
+  .playlist-options .content-wrap label {
+    font-size: 12px;
   }
 }
 

@@ -25,11 +25,10 @@
               +
             </button>
             <div class="btn-message-wrap">
-              <p v-if="!playlist.added">
-                Click first to select playlist, then click again to add a song
-              </p>
+              <p>Click first to select playlist, then click again to add a song</p>
             </div>
           </div>
+          <p class="addedMessage" v-if="playlist.added">Song Added</p>
         </div>
       </li>
     </ul>
@@ -56,6 +55,7 @@ const singleCategoryTrackItems = ref(null)
 const error = ref(false)
 const playListUri = ref(null)
 const optionToggler = ref(false)
+const addTimeout = ref(null)
 
 import { usePLayerStore } from '../stores/player'
 import PopUp from '../components/PopUp.vue'
@@ -170,7 +170,16 @@ const addTrackToPlaylist = async (track) => {
   if (playlist.selectedPlaylist === '') {
     optionToggler.value = true
   } else {
-    await playlist.addSongToCustomPlaylist(track).then((playlist.selectedPlaylist = ''))
+    clearTimeout(addTimeout.value)
+    await playlist
+      .addSongToCustomPlaylist(track)
+      .then((playlist.added = true))
+      .then((playlist.selectedPlaylist = ''))
+      .then(
+        (addTimeout.value = setTimeout(() => {
+          playlist.added = false
+        }, 1000))
+      )
   }
 }
 
@@ -300,6 +309,16 @@ onMounted(getSingleCategory)
   display: flex;
   align-items: center;
   gap: 10px;
+}
+
+.playlist-wrap .playlist .playlist-item .artist-btn-wrap .addedMessage {
+  position: absolute;
+  top: 0;
+  right: 5px;
+  font-size: 14px;
+  background: #141414;
+  padding: 10px;
+  color: white;
 }
 
 /**Responsive */

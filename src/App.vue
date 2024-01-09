@@ -25,7 +25,7 @@
     </div>
     <div ref="leftSide" class="left-side">
       <header ref="leftSideHeader">
-        <nav>
+        <nav @click="close">
           <RouterLink to="/">Artists</RouterLink>
           <RouterLink to="/categories">Categories</RouterLink>
         </nav>
@@ -62,7 +62,7 @@ const authorizeApp = () => {
   const redirectUri = 'https://spotifyprojectvue.netlify.app/'
   const responseType = 'code'
   const scope =
-    'user-read-private user-read-email user-modify-playback-state user-library-read streaming user-read-playback-state playlist-read-private  user-read-currently-playing playlist-modify-public playlist-modify-private'
+    'user-read-private user-read-email user-modify-playback-state user-library-read streaming user-read-playback-state playlist-read-private user-read-currently-playing playlist-modify-public playlist-modify-private'
 
   const authorizationUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=${responseType}&scope=${scope}`
 
@@ -175,7 +175,8 @@ const logOut = () => {
   localStorage.removeItem('access_token')
   localStorage.removeItem('refresh_token')
   localStorage.removeItem('access_token_expires_at')
-  location.reload()
+  location.href = '/'
+  //location.reload()
 }
 
 const openMenu = () => {
@@ -199,6 +200,13 @@ const closeMenu = () => {
   menuTimeOut.value = setTimeout(() => {
     leftSideHeader.value.style.padding = '0'
   }, 300)
+}
+
+const close = () => {
+  if (window.innerWidth <= 740) {
+    closeMenu()
+    //console.log('Prosao uslov')
+  }
 }
 
 onMounted(() => {

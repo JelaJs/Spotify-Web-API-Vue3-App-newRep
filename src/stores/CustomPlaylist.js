@@ -13,7 +13,7 @@ export const useCustomPlaylist = defineStore('customPlaylist', () => {
   const singlePlaylistLoaded = ref(false)
   const curPlaylistDeleted = ref(false)
   const curPlaylistCreated = ref(false)
-
+  const added = ref(false)
   const getUserId = async () => {
     const accessToken = ref(localStorage.getItem('access_token') || null)
 
@@ -337,6 +337,7 @@ export const useCustomPlaylist = defineStore('customPlaylist', () => {
     songsLoaded,
     singlePlaylistLoaded,
     curPlaylistDeleted,
-    curPlaylistCreated
+    curPlaylistCreated,
+    added
   }
 })

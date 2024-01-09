@@ -16,6 +16,34 @@ export const usePLayerStore = defineStore('player', () => {
   const currentTime = ref(0)
   const curVolume = ref(50)
   const maxVolume = 100
+  //const selectedDevice = ref(null)
+
+  const checkActiveDevice = async () => {
+    try {
+      const accessToken = ref(localStorage.getItem('access_token') || null)
+
+      const response = await fetch('https://api.spotify.com/v1/me/player', {
+        headers: {
+          Authorization: `Bearer ${accessToken.value}`
+        }
+      })
+
+      if (!response.ok) {
+        // Ako odgovor nije uspešan, tretirajte ga prema potrebama vaše aplikacije
+        throw new Error(`HTTP error! Status: ${await response.text()}`)
+      }
+
+      const data = await response.json()
+
+      if (data.device) {
+        console.log('Korisnik ima aktivan uređaj:', data.device)
+      } else {
+        console.log('Korisnik nema aktivan uređaj.')
+      }
+    } catch (error) {
+      console.error('Došlo je do greške prilikom provere uređaja:', error)
+    }
+  }
 
   const getActiveDevice = async () => {
     try {
@@ -33,7 +61,9 @@ export const usePLayerStore = defineStore('player', () => {
       }
 
       const data = await response.json()
-      console.log(data)
+      //console.log(data)
+      //console.log('Devices:', data.devices)
+      return data.devices
     } catch (error) {
       console.error('Doslo je do greske prilikom rpistupanju uredjaja:', error)
     }
@@ -146,6 +176,7 @@ export const usePLayerStore = defineStore('player', () => {
     curUri.value = uri
     curPlaylistUri.value = playlistUri
     curPlaylist.value = playlist
+    //console.log('Actiove device:', selectedDevice.value)
 
     try {
       const accessToken = ref(localStorage.getItem('access_token') || null)
@@ -157,6 +188,7 @@ export const usePLayerStore = defineStore('player', () => {
       const data = {
         uris: [spotifyUri],
         position_ms: 0
+        //device_id: selectedDevice.value
       }
 
       const requestOptions = {
@@ -417,6 +449,8 @@ export const usePLayerStore = defineStore('player', () => {
     setVolume,
     maxVolume,
     curVolume,
-    playAlbumSong
+    playAlbumSong,
+    checkActiveDevice
+    // selectedDevice
   }
 })

@@ -33,11 +33,10 @@
                 +
               </button>
               <div class="btn-message-wrap">
-                <p v-if="!playlist.added">
-                  Click first to select playlist, then click again to add a song
-                </p>
+                <p>Click first to select playlist, then click again to add a song</p>
               </div>
             </div>
+            <p class="addedMessage" v-if="playlist.added">Song Added</p>
           </div>
         </li>
       </ul>
@@ -70,6 +69,7 @@ const album = ref(null)
 const albumTracks = ref(null)
 const albumUri = ref(null)
 const optionToggler = ref(false)
+const addTimeout = ref(null)
 
 const checkAndRefreshAccessToken = inject('checkAndRefreshAccessToken')
 const accessToken = ref(localStorage.getItem('access_token') || null)
@@ -143,7 +143,16 @@ const addTrackToPlaylist = async (track) => {
   if (playlist.selectedPlaylist === '') {
     optionToggler.value = true
   } else {
-    await playlist.addSongToCustomPlaylistFromArtist(track).then((playlist.selectedPlaylist = ''))
+    clearTimeout(addTimeout.value)
+    await playlist
+      .addSongToCustomPlaylistFromArtist(track)
+      .then((playlist.added = true))
+      .then((playlist.selectedPlaylist = ''))
+      .then(
+        (addTimeout.value = setTimeout(() => {
+          playlist.added = false
+        }, 1000))
+      )
   }
 }
 
@@ -285,6 +294,16 @@ onMounted(async () => {
 
 .playlist-wrap .playlist .playlist-item .artist-btn-wrap .addToCustomPLayListbtn:hover {
   transform: scale(1.2);
+  color: white;
+}
+
+.addedMessage {
+  position: absolute;
+  top: 0;
+  right: 5px;
+  font-size: 14px;
+  background: #141414;
+  padding: 10px;
   color: white;
 }
 

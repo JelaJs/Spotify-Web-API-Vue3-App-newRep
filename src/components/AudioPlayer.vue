@@ -63,6 +63,14 @@
           type="range"
         />
       </div>
+      <!-- <div v-if="activeDevices.length > 0" class="deviceSelect-wrap">
+        <label>D:</label>
+        <select v-model="player.selectedDevice" id="device-select">
+          <option v-for="device in activeDevices" :key="device.id">
+            {{ device.id }}
+          </option>
+        </select>
+      </div>-->
     </div>
   </div>
 </template>
@@ -70,10 +78,10 @@
 <script setup>
 import { defineProps, onMounted } from 'vue'
 import { usePLayerStore } from '../stores/player'
-import { debounce } from 'lodash'
 
 const props = defineProps(['checkAndRefreshAccessToken'])
 const player = usePLayerStore()
+//const activeDevices = ref([])
 
 const pause = async () => {
   await props.checkAndRefreshAccessToken()
@@ -114,7 +122,10 @@ const changeVolume = async () => {
   await player.setVolume(player.curVolume)
 }
 
-onMounted(() => {
+onMounted(async () => {
+  //player.checkActiveDevice()
+  //activeDevices.value = await player.getActiveDevice()
+  //console.log(activeDevices.value)
   player.pause()
 })
 </script>
@@ -181,6 +192,24 @@ onMounted(() => {
   margin-left: 10px;
 }
 
+.audio-player .duration-volume-wrap .deviceSelect-wrap {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.audio-player .duration-volume-wrap .deviceSelect-wrap #device-select {
+  border: none;
+  background: transparent;
+  width: 50px;
+  outline: none;
+  color: white;
+}
+
+.audio-player .duration-volume-wrap .deviceSelect-wrap #device-select option {
+  color: black;
+}
+
 /*Responsive */
 @media (max-width: 915px) {
   .audio-player .volume-wrap .volume-range {
@@ -194,6 +223,25 @@ onMounted(() => {
   .audio-player .volume-wrap svg {
     position: absolute;
     top: 15px;
+  }
+}
+
+@media (max-width: 740px) {
+  .audio-player .volume-wrap {
+    display: none;
+  }
+  .audio-player .duration-volume-wrap .deviceSelect-wrap #device-select {
+    width: 20px;
+  }
+}
+
+@media (max-width: 470px) {
+  .audio-player .song-duration-wrap input {
+    width: 34%;
+  }
+
+  .audio-player .song-duration-wrap p {
+    font-size: 14px;
   }
 }
 </style>
