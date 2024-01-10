@@ -334,6 +334,17 @@ onMounted(getSingleCategory)
   }
 }
 
+@media (max-width: 1023px) {
+  .playlist-wrap
+    .playlist
+    .playlist-item
+    .artist-btn-wrap
+    .button-inner-wrap:hover
+    .btn-message-wrap {
+    display: none;
+  }
+}
+
 @media (max-width: 920px) {
   .playlist-wrap .playlist .playlist-item .img-p-wrap p {
     font-size: 14px;

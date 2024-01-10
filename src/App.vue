@@ -1,6 +1,12 @@
 <template>
   <div class="authorize" v-if="!accessToken">
-    <button class="authorize-btn" @click="authorizeApp">Authorize With Spotify Account</button>
+    <div class="auth-btn-wrap">
+      <button class="authorize-btn" @click="authorizeApp">Authorize With Spotify Account</button>
+    </div>
+    <p>
+      For the app to work properly, after authorization, make sure to keep the original Spotify
+      open, and to set the proper audio device active(play random song)
+    </p>
   </div>
   <div class="grid" v-else>
     <div class="responsiveMenuToggler">
@@ -31,7 +37,10 @@
         </nav>
         <button class="logout-Btn" @click="logOut">Log out</button>
       </header>
-      <CustomPlaylist :checkAndRefreshAccessToken="checkAndRefreshAccessToken" />
+      <CustomPlaylist
+        :checkAndRefreshAccessToken="checkAndRefreshAccessToken"
+        @closeMobMenu="close()"
+      />
     </div>
 
     <div class="right-side">
@@ -60,6 +69,7 @@ const closeMenuBtn = ref(null)
 const authorizeApp = () => {
   const clientId = 'c92cce6aa61a47eab08c3263f4883225'
   const redirectUri = 'https://spotifyprojectvue.netlify.app/'
+  //const redirectUri = 'http://localhost:5173/'
   const responseType = 'code'
   const scope =
     'user-read-private user-read-email user-modify-playback-state user-library-read streaming user-read-playback-state playlist-read-private user-read-currently-playing playlist-modify-public playlist-modify-private'
@@ -90,6 +100,7 @@ const exchangeCodeForAccessToken = async () => {
         grant_type: 'authorization_code',
         code: code.value,
         redirect_uri: 'https://spotifyprojectvue.netlify.app/',
+        //redirect_uri: 'http://localhost:5173/',
         client_id: 'c92cce6aa61a47eab08c3263f4883225',
         client_secret: '237534ceca1a4e8790f842ab589b16fd'
       })
@@ -109,6 +120,7 @@ const exchangeCodeForAccessToken = async () => {
 
       // Nakon obrade, preusmjeri na početnu stranicu
       router.push('/')
+      window.open('https://www.spotify.com/', '_blank')
     } else {
       console.log('Greska')
     }
@@ -334,6 +346,13 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.authorize p {
+  margin-top: 10px;
+  text-align: center;
 }
 
 .authorize .authorize-btn {
@@ -392,7 +411,7 @@ onMounted(() => {
     display: block;
   }
   .grid .left-side {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 140px;
@@ -407,6 +426,7 @@ onMounted(() => {
     height: 0;
     /*display: none;*/
     transition: all 0.3s;
+    border-right: 2px solid #1d1d1d;
   }
 
   .closeBtn-wrap {

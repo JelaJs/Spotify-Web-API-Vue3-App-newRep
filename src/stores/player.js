@@ -17,6 +17,7 @@ export const usePLayerStore = defineStore('player', () => {
   const curVolume = ref(50)
   const maxVolume = 100
   //const selectedDevice = ref(null)
+  const durInterval = ref(null)
 
   const checkActiveDevice = async () => {
     try {
@@ -90,7 +91,7 @@ export const usePLayerStore = defineStore('player', () => {
       currentPosition.value = playbackState.progress_ms || 0
       trackDuration.value = playbackState.item.duration_ms || 0
 
-      //console.log('cur pos', currentPosition.value)
+      console.log('cur pos', currentPosition.value)
       //console.log('Dur pos', trackDuration.value)
       if (currentPosition.value === trackDuration.value) {
         skipToNext()
@@ -101,8 +102,14 @@ export const usePLayerStore = defineStore('player', () => {
     }
   }
 
-  watch(isPlaying, () => {
-    setInterval(getCurPosition, 1000)
+  watch(isPlaying, (newIsPlaying) => {
+    if (newIsPlaying) {
+      durInterval.value = setInterval(() => {
+        getCurPosition()
+      }, 1000)
+    } else {
+      clearInterval(durInterval.value)
+    }
   })
 
   const seekToPosition = async () => {
@@ -335,6 +342,7 @@ export const usePLayerStore = defineStore('player', () => {
       }
 
       isPlaying.value = false
+      //clearInterval(durInterval.value)
     } catch (error) {
       console.error('Doslo je do grekse:', error)
     }

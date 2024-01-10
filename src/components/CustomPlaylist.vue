@@ -50,6 +50,7 @@ import { useCustomPlaylist } from '../stores/CustomPlaylist'
 //import SingleCustomPlaylist from '../views/SingleCustomPlaylist.vue'
 
 const props = defineProps(['checkAndRefreshAccessToken'])
+const emit = defineEmits(['closeMobMenu'])
 
 const playlist = useCustomPlaylist()
 const router = useRouter()
@@ -79,6 +80,7 @@ const createCustomPlaylist = async () => {
 
 const openSingleCustomPlaylist = (id) => {
   router.push(`/playlist/${id}`)
+  emit('closeMobMenu')
 }
 
 const updateCustomPlaylists = async () => {
@@ -117,7 +119,7 @@ onMounted(async () => {
   background-color: #141414;
   border-radius: 10px;
   height: 100%;
-  overflow: none;
+  overflow-x: hidden;
 }
 
 .custom-playList .custom-header-btn-wrap {
