@@ -55,7 +55,7 @@ import { ref, onMounted, provide } from 'vue'
 import { RouterLink, RouterView, useRouter } from 'vue-router'
 import AudioPlayer from './components/AudioPlayer.vue'
 import CustomPlaylist from './components/CustomPlaylist.vue'
-
+//Clean the code
 const code = ref(null)
 const router = useRouter()
 const accessToken = ref(localStorage.getItem('access_token') || null)
