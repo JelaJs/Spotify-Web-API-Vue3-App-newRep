@@ -7,6 +7,7 @@
       For the app to work properly, after authorization, make sure to keep the original Spotify
       open, and to set the proper audio device active(play random song)
     </p>
+    <p>Also for some features, like playing songs, you will need Spotify premium</p>
   </div>
   <div class="grid" v-else>
     <div class="responsiveMenuToggler">
@@ -55,7 +56,7 @@ import { ref, onMounted, provide } from 'vue'
 import { RouterLink, RouterView, useRouter } from 'vue-router'
 import AudioPlayer from './components/AudioPlayer.vue'
 import CustomPlaylist from './components/CustomPlaylist.vue'
-//Clean the code
+
 const code = ref(null)
 const router = useRouter()
 const accessToken = ref(localStorage.getItem('access_token') || null)
@@ -115,27 +116,27 @@ const exchangeCodeForAccessToken = async () => {
       localStorage.setItem('access_token', accessToken.value)
       localStorage.setItem('refresh_token', refreshToken.value)
 
-      // Postavi timer za provjeru i osvježavanje pristupnog tokena prije nego što istekne
+      // timer za proveru i osvežavanje pristupnog tokena
       setTokenRefreshTimer(data.expires_in)
 
-      // Nakon obrade, preusmjeri na početnu stranicu
+      // preusmeravanje na pocetnu stranicu
       router.push('/')
-      window.open('https://www.spotify.com/', '_blank')
+      //window.open('https://www.spotify.com/', '_blank')
     } else {
       console.log('Greska')
     }
   } catch (error) {
-    console.error('Greška prilikom razmjene koda za pristupni token:', error)
+    console.error('Greška prilikom razmene koda za pristupni token:', error)
   }
 }
 
 const setTokenRefreshTimer = (expiresIn) => {
   const currentTime = Math.floor(Date.now() / 1000)
-  const expirationTime = currentTime + expiresIn - 60 // Osvježi 60 sekundi prije nego što istekne
+  const expirationTime = currentTime + expiresIn - 60 // Osveži 60 sekundi prie nego što istekne
 
   localStorage.setItem('access_token_expires_at', expirationTime)
 
-  // Postavi timeout za osvježavanje pristupnog tokena
+  // timeout za osvežavanje pristupnog tokena
   setTimeout(
     () => {
       refreshAccessToken()
@@ -149,7 +150,7 @@ const checkAndRefreshAccessToken = async () => {
   const currentTime = Math.floor(Date.now() / 1000)
 
   if (expirationTime && currentTime >= expirationTime) {
-    // Pristupni token je istekao, osvježi ga
+    // Pristupni token je istekao, osveži ga
     await refreshAccessToken()
   }
 }
@@ -175,7 +176,7 @@ const refreshAccessToken = async () => {
 
     accessToken.value = data.access_token
 
-    // Osvježi localStorage sa novim pristupnim tokenom i novim vremenom isteka
+    // Osvežen localStorage sa novim pristupnim tokenom i novim vremenom isteka
     localStorage.setItem('access_token', accessToken.value)
     localStorage.setItem('access_token_expires_at', currentTime + data.expires_in)
   } catch (error) {

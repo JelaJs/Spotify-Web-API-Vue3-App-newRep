@@ -35,8 +35,8 @@
   </div>
   <PopUp v-if="player.playSongError"
     ><p>
-      Something went wrong, check your active device on your original spotify app(Bottom Left
-      Corner)
+      Maybe your device is not active. Check your active device on your original Spotify (Bottom
+      Right Corner), or play a random song to activate the device.
     </p></PopUp
   >
   <PlaylistOtions v-if="optionToggler" @toggleComp="toggle()" />

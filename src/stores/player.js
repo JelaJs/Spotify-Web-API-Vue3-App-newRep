@@ -30,7 +30,6 @@ export const usePLayerStore = defineStore('player', () => {
       })
 
       if (!response.ok) {
-        // Ako odgovor nije uspešan, tretirajte ga prema potrebama vaše aplikacije
         throw new Error(`HTTP error! Status: ${await response.text()}`)
       }
 
@@ -223,7 +222,6 @@ export const usePLayerStore = defineStore('player', () => {
         // console.log('trenutna playlista', curPlaylist.value)
         //console.log('Playlist song index', playlistSongIndex.value)
       } else {
-        // Ako je status odgovora nešto drugo osim 204, tretirajte ga prema potrebama vaše aplikacije
         console.error(`Neočekivan status odgovora: ${response.status}`)
       }
     } catch (error) {
@@ -273,7 +271,6 @@ export const usePLayerStore = defineStore('player', () => {
         // console.log('trenutna playlista', curPlaylist.value)
         //console.log('Playlist song index', playlistSongIndex.value)
       } else {
-        // Ako je status odgovora nešto drugo osim 204, tretirajte ga prema potrebama vaše aplikacije
         console.error(`Neočekivan status odgovora: ${await response.text()}`)
       }
     } catch (error) {
@@ -342,7 +339,6 @@ export const usePLayerStore = defineStore('player', () => {
       }
 
       isPlaying.value = false
-      //clearInterval(durInterval.value)
     } catch (error) {
       console.error('Doslo je do grekse:', error)
     }
@@ -383,7 +379,6 @@ export const usePLayerStore = defineStore('player', () => {
         isPlaying.value = true
         // currentSong.value = curTrack.value.track.name
       } else {
-        // Ako je status odgovora nešto drugo osim 204, tretirajte ga prema potrebama vaše aplikacije
         //console.error(`Neočekivan status odgovora: ${response.status}`)
       }
     } catch (error) {

@@ -53,13 +53,10 @@ const getCategories = async () => {
       }
     })
 
-    // Provjeri status odgovora
     if (response.ok) {
       const data = await response.json()
       categories.value = data.categories.items
       //console.log(categories.value)
-
-      // Obradi podatke od API poziva
     } else {
       error.value = true
       throw new Error(`Error: ${response.status}`)
@@ -89,9 +86,8 @@ const goToSingleCategorie = (id) => {
 
 onMounted(getCategories)
 onMounted(async () => {
-  // Dohvati kategorije asinkrono prije nego što postaviš inicijalne filtrirane kategorije
   await getCategories()
-  // Postavi inicijalno filtrirane kategorije na sve kategorije
+
   filteredCategories.value = categories.value
 })
 </script>

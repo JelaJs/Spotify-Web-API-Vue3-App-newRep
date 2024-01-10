@@ -284,7 +284,6 @@ export const useCustomPlaylist = defineStore('customPlaylist', () => {
       }
 
       //console.log('Pesma je uspešno obrisana iz playliste.')
-      // Dodajte logiku za osvežavanje komponente ili prikazivanje poruke korisniku
     } catch (error) {
       console.error('Greška prilikom brisanja pesme iz playliste:', error.message)
     }

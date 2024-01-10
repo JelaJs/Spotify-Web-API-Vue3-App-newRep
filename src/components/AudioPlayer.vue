@@ -237,7 +237,7 @@ onMounted(async () => {
 
 @media (max-width: 470px) {
   .audio-player .song-duration-wrap input {
-    width: 34%;
+    width: 50%;
   }
 
   .audio-player .song-duration-wrap p {
