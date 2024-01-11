@@ -7,7 +7,7 @@
       For the app to work properly, after authorization, make sure to keep the original Spotify
       open, and to set the proper audio device active(play random song)
     </p>-->
-    <p>Also for some features, like playing songs, you will need Spotify premium</p>
+    <p>For some features, like playing songs, you will need Spotify premium</p>
   </div>
   <div class="grid" v-else>
     <div class="responsiveMenuToggler">
