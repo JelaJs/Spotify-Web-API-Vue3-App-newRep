@@ -128,7 +128,7 @@ const getArtistID = () => {
       if (!searchResponse.ok) {
         searchedArtist.value = null
         artistError.value = true
-        throw new Error('Nije moguće dohvatiti informacije o umjetniku')
+        throw new Error('Nije moguće dohvatiti informacije o umetniku')
       }
 
       const searchData = await searchResponse.json()
@@ -137,7 +137,7 @@ const getArtistID = () => {
       if (!firstArtist) {
         noArtists.value = true
         searchedArtist.value = null
-        throw new Error('Umjetnik nije pronađen')
+        throw new Error('Umetnik nije pronadjen')
       }
 
       artistId.value = firstArtist.id
@@ -147,7 +147,7 @@ const getArtistID = () => {
 
       await getSearchedArtists(firstArtist.id)
     } catch (error) {
-      console.error('Greška prilikom dohvaćanja informacija o umjetniku', error.message)
+      console.error('Greška prilikom hvatanja informacija o umetniku', error.message)
     }
   }, 300)
 }
