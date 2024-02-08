@@ -5,6 +5,7 @@ import SingleCategory from '../views/SingleCategoryView.vue'
 import SingleCustomPlaylist from '../views/SingleCustomPlaylist.vue'
 import SingleArtist from '../views/SingleArtistView.vue'
 import SingleArtistSongs from '../views/SingleArtistSongsView.vue'
+import PageNotFound from '../views/PageNotFoundView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -38,8 +39,16 @@ const router = createRouter({
       path: '/artistsongs/:id',
       name: 'singleArtistSongs',
       component: SingleArtistSongs
+    },
+    {
+      path: '/:catchAll(.*)',
+      name: 'NotFound',
+      component: PageNotFound
     }
-  ]
+  ],
+  scrollBehavior() {
+    return { top: 0, left: 0 }
+  }
 })
 
 export default router

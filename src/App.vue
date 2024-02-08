@@ -3,10 +3,10 @@
     <div class="auth-btn-wrap">
       <button class="authorize-btn" @click="authorizeApp">Authorize With Spotify Account</button>
     </div>
-    <!-- <p>
+    <p>
       For the app to work properly, after authorization, make sure to keep the original Spotify
       open, and to set the proper audio device active(play random song)
-    </p>-->
+    </p>
     <p>For some features, like playing songs, you will need Spotify premium</p>
   </div>
   <div class="grid" v-else>
@@ -68,9 +68,13 @@ const openMenuBtn = ref(null)
 const closeMenuBtn = ref(null)
 
 const authorizeApp = () => {
+  //Set your clientId from your spotify dashboard
+  //const clientId = 'YOUR CLIENT ID'
   const clientId = 'c92cce6aa61a47eab08c3263f4883225'
-  const redirectUri = 'https://spotifyprojectvue.netlify.app/'
-  //const redirectUri = 'http://localhost:5173/'
+  //Set your redirect URI in spotify dashboard
+  //const redirectUri = 'https://YOURLINK/'
+  //const redirectUri = 'https://spotifyprojectvue.netlify.app/'
+  const redirectUri = 'http://localhost:5173/'
   const responseType = 'code'
   const scope =
     'user-read-private user-read-email user-modify-playback-state user-library-read streaming user-read-playback-state playlist-read-private user-read-currently-playing playlist-modify-public playlist-modify-private'
@@ -150,7 +154,6 @@ const checkAndRefreshAccessToken = async () => {
   const currentTime = Math.floor(Date.now() / 1000)
 
   if (expirationTime && currentTime >= expirationTime) {
-    // Pristupni token je istekao, osveži ga
     await refreshAccessToken()
   }
 }
