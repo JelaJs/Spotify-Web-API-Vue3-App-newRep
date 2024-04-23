@@ -69,12 +69,9 @@ const closeMenuBtn = ref(null)
 
 const authorizeApp = () => {
   //Set your clientId from your spotify dashboard
-  //const clientId = 'YOUR CLIENT ID'
-  const clientId = 'c92cce6aa61a47eab08c3263f4883225'
+  const clientId = 'YOUR CLIENT ID'
   //Set your redirect URI in spotify dashboard
-  //const redirectUri = 'https://YOURLINK/'
-  //const redirectUri = 'https://spotifyprojectvue.netlify.app/'
-  const redirectUri = 'http://localhost:5173/'
+  const redirectUri = 'https://YOURLINK/'
   const responseType = 'code'
   const scope =
     'user-read-private user-read-email user-modify-playback-state user-library-read streaming user-read-playback-state playlist-read-private user-read-currently-playing playlist-modify-public playlist-modify-private'
@@ -104,10 +101,9 @@ const exchangeCodeForAccessToken = async () => {
       body: new URLSearchParams({
         grant_type: 'authorization_code',
         code: code.value,
-        redirect_uri: 'https://spotifyprojectvue.netlify.app/',
-        //redirect_uri: 'http://localhost:5173/',
-        client_id: 'c92cce6aa61a47eab08c3263f4883225',
-        client_secret: '237534ceca1a4e8790f842ab589b16fd'
+        redirect_uri: 'http://localhost:5173/',
+        client_id: 'Your client id',
+        client_secret: 'Your client secret'
       })
     })
 
@@ -170,8 +166,8 @@ const refreshAccessToken = async () => {
       body: new URLSearchParams({
         grant_type: 'refresh_token',
         refresh_token: refreshToken.value,
-        client_id: 'c92cce6aa61a47eab08c3263f4883225',
-        client_secret: '237534ceca1a4e8790f842ab589b16fd'
+        client_id: 'Your clinet id',
+        client_secret: 'Your client secret'
       })
     })
 
